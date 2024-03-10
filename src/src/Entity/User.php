@@ -71,6 +71,11 @@ class User implements UserInterface
      */
     private Collection $photos;
 
+    /**
+     * @ORM\OneToMany(targetEntity=DrinksCard::class, mappedBy="user", orphanRemoval=true)
+     */
+    private Collection $drinksCards;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -78,6 +83,7 @@ class User implements UserInterface
         $this->drinks = new ArrayCollection();
         $this->roles = [];
         $this->photos = new ArrayCollection();
+        $this->drinksCards = new ArrayCollection();
     }
 
     public function getId(): int
@@ -286,6 +292,31 @@ class User implements UserInterface
     public function removePhoto(Photo $photo): self
     {
         $this->photos->removeElement($photo);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DrinksCard>
+     */
+    public function getDrinksCards(): Collection
+    {
+        return $this->drinksCards;
+    }
+
+    public function addDrinksCard(DrinksCard $drinksCard): self
+    {
+        if (!$this->drinksCards->contains($drinksCard)) {
+            $this->drinksCards[] = $drinksCard;
+            $drinksCard->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDrinksCard(DrinksCard $drinksCard): self
+    {
+        $this->drinksCards->removeElement($drinksCard);
 
         return $this;
     }

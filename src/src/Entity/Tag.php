@@ -26,7 +26,7 @@ class Tag
     private string $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Drink::class, mappedBy="tag")
+     * @ORM\ManyToMany(targetEntity=Drink::class, mappedBy="tags")
      * @ORM\OrderBy({"id" = "DESC"})
      */
     private Collection $drinks;

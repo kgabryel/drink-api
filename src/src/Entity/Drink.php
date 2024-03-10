@@ -35,7 +35,7 @@ class Drink
      * @ORM\ManyToMany(targetEntity=Tag::class, inversedBy="drinks")
      * @ORM\OrderBy({"name" = "ASC"})
      */
-    private Collection $tag;
+    private Collection $tags;
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="drinks")
      * @ORM\JoinColumn(nullable=false)
@@ -52,7 +52,7 @@ class Drink
     private bool $public;
 
     /**
-     * @ORM\Column(type="string", length=128)
+     * @ORM\Column(type="string", length=128, unique=true))
      */
     private string $publicId;
 
@@ -65,7 +65,7 @@ class Drink
     public function __construct()
     {
         $this->drinkPositions = new ArrayCollection();
-        $this->tag = new ArrayCollection();
+        $this->tags = new ArrayCollection();
         $this->photos = new ArrayCollection();
     }
 
@@ -128,13 +128,13 @@ class Drink
      */
     public function getTag(): Collection
     {
-        return $this->tag;
+        return $this->tags;
     }
 
     public function addTag(Tag $tag): self
     {
-        if (!$this->tag->contains($tag)) {
-            $this->tag[] = $tag;
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
         }
 
         return $this;
@@ -142,7 +142,7 @@ class Drink
 
     public function removeTag(Tag $tag): self
     {
-        $this->tag->removeElement($tag);
+        $this->tags->removeElement($tag);
 
         return $this;
     }
@@ -173,7 +173,7 @@ class Drink
 
     public function clearTags(): void
     {
-        $this->tag = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function isPublic(): bool

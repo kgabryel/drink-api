@@ -11,4 +11,5 @@ class LengthConfig
     public const INGREDIENT = 100;
     public const OZA_KEY = 128;
     public const EMAIL = 180;
+    public const DRINKS_CARD = 255;
 }

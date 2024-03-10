@@ -50,6 +50,10 @@ security:
       pattern: ^/api/facebook
       stateless: true
       anonymous: true
+    drink_card:
+      pattern: ^/api/drinks-cards/.{36}
+      stateless: true
+      anonymous: true
     photos:
       pattern: ^/api/drinks/\d+/photos/\d+/(small|medium|original)
       stateless: true
@@ -93,6 +97,7 @@ security:
     - { path: ^/api/facebook/redirect, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/facebook/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/public/drinks, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/drinks-cards/.+, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api/drinks/\d+/photos/\d+/(small|medium|original), roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
     # - { path: ^/profile, roles: ROLE_USER }

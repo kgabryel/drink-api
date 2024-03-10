@@ -6,6 +6,7 @@ use App\Dto\Drink;
 use App\Entity\Photo;
 use App\Factory\Entity\PhotoFactory;
 use App\Form\PhotoForm;
+use App\Repository\DrinkRepository;
 use App\Repository\PhotoRepository;
 use App\Service\Entity\DrinkService;
 use App\Service\Entity\PhotoService;
@@ -28,14 +29,15 @@ class PhotosController extends BaseController
         string $type,
         int $photoId,
         PhotoRepository $photoRepository,
-        KernelInterface $kernel
+        KernelInterface $kernel,
+        DrinkRepository $drinkRepository
     ): Response {
         /** @var Photo $photo */
         $photo = $photoRepository->find($photoId);
         if ($photo === null) {
             return new Response(null, Response::HTTP_FORBIDDEN);
         }
-        if (!PhotoService::checkAccess($photo, $this->getUser())) {
+        if (!PhotoService::checkAccess($photo, $this->getUser(), $drinkRepository)) {
             return new Response(null, Response::HTTP_FORBIDDEN);
         }
         $response = new Response();

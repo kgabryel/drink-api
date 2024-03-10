@@ -2,6 +2,7 @@
 
 use App\Config\PhotoType;
 use App\Controller\AuthController;
+use App\Controller\DrinksCardsController;
 use App\Controller\DrinksController;
 use App\Controller\IngredientsController;
 use App\Controller\OzaSuppliesController;
@@ -44,7 +45,7 @@ return static function (RoutingConfigurator $routes) {
     $tagsGroup->setController(TagsController::class)
         ->addIndex()
         ->addStore()
-        ->addUpdate()
+        ->addModify()
         ->addDestroy();
     /** Drinks routes */
     $drinksGroup = new Group($routes, 'drinks', '/api/drinks');
@@ -168,6 +169,30 @@ return static function (RoutingConfigurator $routes) {
             new Route('/{id}/photos'),
             new Info([Request::METHOD_PATCH], 'reorderPhotos'),
             ['id' => '\d+']
+        );
+    $drinksCardsGroup = new Group($routes, 'drinksCards', '/api/drinks-cards');
+    $drinksCardsGroup->setController(DrinksCardsController::class)
+        ->addStore()
+        ->addIndex()
+        ->addDestroy()
+        ->addUpdate()
+        ->add(
+            'activate',
+            new Route('/{id}/activate'),
+            new Info([Request::METHOD_PATCH], 'activate'),
+            ['id' => '\d+']
+        )
+        ->add(
+            'deactivate',
+            new Route('/{id}/deactivate'),
+            new Info([Request::METHOD_PATCH], 'deactivate'),
+            ['id' => '\d+']
+        )
+        ->add(
+            'show',
+            new Route('/{id}'),
+            new Info([Request::METHOD_GET], 'show'),
+            ['id' => '.{36}']
         );
     return $routes;
 };

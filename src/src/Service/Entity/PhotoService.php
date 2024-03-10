@@ -5,6 +5,7 @@ namespace App\Service\Entity;
 use App\Config\PhotoType;
 use App\Entity\Photo;
 use App\Entity\User;
+use App\Repository\DrinkRepository;
 use App\Repository\PhotoRepository;
 use App\Utils\PhotoUtils;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,14 +33,16 @@ class PhotoService extends EntityService
         $this->kernel = $kernel;
     }
 
-    public static function checkAccess(Photo $photo, ?User $user): bool
+    public static function checkAccess(Photo $photo, ?User $user, DrinkRepository $drinkRepository): bool
     {
         $drink = $photo->getDrink();
         if ($drink->isPublic()) {
             return true;
         }
-
-        return $photo->getUser()->getId() === $user?->getId();
+        if($photo->getUser()->getId() === $user?->getId()) {
+            return true;
+        }
+        return $drinkRepository->existsInCard($drink->getId());
     }
 
     public function set(Photo $photo): self
