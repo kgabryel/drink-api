@@ -6,11 +6,11 @@ use App\Config\LengthConfig;
 use App\Entity\Ingredient;
 use App\Model\DrinkPosition as Model;
 use App\Repository\IngredientRepository;
+use App\Service\UserService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotNull;
 
@@ -18,9 +18,9 @@ class DrinkPosition extends AbstractType
 {
     private array $ingredients;
 
-    public function __construct(IngredientRepository $ingredientRepository, TokenStorageInterface $tokenStorage)
+    public function __construct(IngredientRepository $ingredientRepository, UserService $userService)
     {
-        $user = $tokenStorage->getToken()->getUser();
+        $user = $userService->getUser();
         $this->ingredients = $ingredientRepository->findForUser($user);
     }
 

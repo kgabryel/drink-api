@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Dto\Drink;
-use App\Entity\Photo;
 use App\Factory\Entity\PhotoFactory;
 use App\Form\PhotoForm;
 use App\Repository\DrinkRepository;
@@ -32,7 +31,6 @@ class PhotosController extends BaseController
         KernelInterface $kernel,
         DrinkRepository $drinkRepository
     ): Response {
-        /** @var Photo $photo */
         $photo = $photoRepository->find($photoId);
         if ($photo === null) {
             return new Response(null, Response::HTTP_FORBIDDEN);
@@ -43,7 +41,7 @@ class PhotosController extends BaseController
         $response = new Response();
         $response->headers->set('Content-Type', $photo->getType());
         $response->setContent(
-            file_get_contents(PhotoUtils::getPath($kernel->getProjectDir(), $type, $photo->getFileName()))
+            (string)file_get_contents(PhotoUtils::getPath($kernel->getProjectDir(), $type, $photo->getFileName()))
         );
 
         return $response;

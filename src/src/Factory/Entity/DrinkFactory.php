@@ -5,11 +5,11 @@ namespace App\Factory\Entity;
 use App\Entity\Drink;
 use App\Model\Drink as DrinkModel;
 use App\Service\DrinkFillService;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DrinkFactory extends EntityFactory
 {
@@ -17,10 +17,10 @@ class DrinkFactory extends EntityFactory
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage,
+        UserService $userService,
         DrinkFillService $drinkFillService
     ) {
-        parent::__construct($entityManager, $tokenStorage);
+        parent::__construct($entityManager, $userService);
         $this->drinkFillService = $drinkFillService;
     }
 

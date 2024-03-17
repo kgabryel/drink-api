@@ -3,8 +3,8 @@
 namespace App\Factory\Entity;
 
 use App\Entity\User;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 abstract class EntityFactory
 {
@@ -13,10 +13,10 @@ abstract class EntityFactory
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage
+        UserService $userService
     ) {
         $this->entityManager = $entityManager;
-        $this->user = $tokenStorage->getToken()->getUser();
+        $this->user = $userService->getUser();
     }
 
     protected function saveEntity(object $entity): void

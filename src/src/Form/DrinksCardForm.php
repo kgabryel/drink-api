@@ -6,20 +6,17 @@ use App\Config\LengthConfig;
 use App\Entity\Drink;
 use App\Entity\Ingredient;
 use App\Entity\Tag;
-use App\Field\DrinkPosition;
 use App\Model\DrinksCard;
 use App\Repository\DrinkRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\TagRepository;
+use App\Service\UserService;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\NotNull;
 
 class DrinksCardForm extends UserForm
 {
@@ -28,17 +25,17 @@ class DrinksCardForm extends UserForm
     private array $drinks;
 
     public function __construct(
-        TokenStorageInterface $tokenStorage,
+        UserService $userService,
         IngredientRepository $ingredientRepository,
         TagRepository $tagRepository,
         DrinkRepository $drinkRepository
-    )
-    {
-        parent::__construct($tokenStorage);
+    ) {
+        parent::__construct($userService);
         $this->tags = $tagRepository->findForUser($this->user);
         $this->ingredients = $ingredientRepository->findForUser($this->user);
         $this->drinks = $drinkRepository->findForUser($this->user);
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(

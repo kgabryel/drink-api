@@ -2,10 +2,7 @@
 
 namespace App\Factory\Entity;
 
-use App\Entity\Drink;
 use App\Entity\DrinksCard;
-use App\Entity\Ingredient;
-use App\Entity\Tag;
 use App\Model\DrinksCard as DrinksCardModel;
 use App\Service\DrinksCardFillService;
 use Ramsey\Uuid\Uuid;

@@ -9,11 +9,11 @@ use InvalidArgumentException;
 class FullDrinkPosition implements DtoInterface
 {
     private int $id;
-    private string $amount;
+    private ?string $amount;
     private string $ingredient;
-    private string $ingredientDescription;
+    private ?string $ingredientDescription;
 
-    public function __construct(int $id, string $amount, Ingredient $ingredient)
+    public function __construct(int $id, ?string $amount, Ingredient $ingredient)
     {
         $this->id = $id;
         $this->amount = $amount;
@@ -26,11 +26,11 @@ class FullDrinkPosition implements DtoInterface
      *
      * @return self
      */
-    public static function createFromEntity($entity): self
+    public static function createFromEntity(mixed $entity): self
     {
         if (!($entity instanceof Entity)) {
             throw new InvalidArgumentException(
-                printf('Parameter "entity" isn\'t an instance of "%s" class', Entity::class)
+                sprintf('Parameter "entity" isn\'t an instance of "%s" class', Entity::class)
             );
         }
 
@@ -42,7 +42,7 @@ class FullDrinkPosition implements DtoInterface
         return $this->id;
     }
 
-    public function getAmount(): string
+    public function getAmount(): ?string
     {
         return $this->amount;
     }

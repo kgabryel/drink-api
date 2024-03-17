@@ -6,7 +6,6 @@ use App\Dto\DrinksCard;
 use App\Dto\FullDrink;
 use App\Factory\Entity\DrinksCardFactory;
 use App\Form\DrinksCardForm;
-use App\Form\EditIngredientForm;
 use App\Repository\DrinkRepository;
 use App\Repository\DrinksCardRepository;
 use App\Service\Entity\DrinksCardService;
@@ -27,6 +26,7 @@ class DrinksCardsController extends BaseController
     {
         return new Response($this->serializer->serializeArray($tagRepository->findForUser($this->getUser())));
     }
+
     public function store(DrinksCardFactory $drinksCardFactory, Request $request): Response
     {
         $form = $this->createForm(DrinksCardForm::class);
@@ -44,12 +44,13 @@ class DrinksCardsController extends BaseController
         $drinksCard = $cardRepository->findOneBy([
             'publicId' => $id
         ]);
-        if($drinksCard === null) {
+        if ($drinksCard === null) {
             return new Response(null, Response::HTTP_NOT_FOUND);
         }
-        if(!$drinksCard->isActive()) {
+        if (!$drinksCard->isActive()) {
             return new Response(null, Response::HTTP_LOCKED);
         }
+
         return new Response($serializer->serializeArray($drinkRepository->findForCard($id)));
     }
 

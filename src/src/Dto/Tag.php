@@ -11,6 +11,7 @@ class Tag implements DtoInterface
     private string $name;
     private int $drinksCount;
     private bool $isPublic;
+
     public function __construct(int $id, string $name, int $drinksCount, bool $isPublic)
     {
         $this->id = $id;
@@ -24,11 +25,11 @@ class Tag implements DtoInterface
      *
      * @return self
      */
-    public static function createFromEntity($entity): self
+    public static function createFromEntity(mixed $entity): self
     {
         if (!($entity instanceof Entity)) {
             throw new InvalidArgumentException(
-                printf('Parameter "entity" isn\'t an instance of "%s" class', Entity::class)
+                sprintf('Parameter "entity" isn\'t an instance of "%s" class', Entity::class)
             );
         }
 
@@ -50,13 +51,13 @@ class Tag implements DtoInterface
         return $this->name;
     }
 
-    public function getDrinksCount(): int
-    {
-        return $this->drinksCount;
-    }
-
     public function isPublic(): bool
     {
         return $this->isPublic;
+    }
+
+    public function getDrinksCount(): int
+    {
+        return $this->drinksCount;
     }
 }

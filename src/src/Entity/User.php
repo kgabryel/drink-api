@@ -58,7 +58,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="bigint", nullable=true)
      */
-    private ?int $fbId;
+    private ?string $fbId;
 
     /**
      * @ORM\OneToOne(targetEntity=Settings::class, mappedBy="user", cascade={"persist", "remove"})
@@ -254,7 +254,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getSettings(): ?Settings
+    public function getSettings(): Settings
     {
         return $this->settings;
     }

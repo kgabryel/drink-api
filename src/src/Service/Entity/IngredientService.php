@@ -5,10 +5,10 @@ namespace App\Service\Entity;
 use App\Entity\Ingredient;
 use App\Model\Ingredient as IngredientModel;
 use App\Repository\IngredientRepository;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class IngredientService extends EntityService
 {
@@ -17,10 +17,10 @@ class IngredientService extends EntityService
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage,
+        UserService $userService,
         IngredientRepository $ingredientRepository
     ) {
-        parent::__construct($entityManager, $tokenStorage);
+        parent::__construct($entityManager, $userService);
         $this->ingredientRepository = $ingredientRepository;
     }
 
@@ -37,12 +37,17 @@ class IngredientService extends EntityService
 
     public function findByOzaId(int $id): bool
     {
-        $this->ingredient = $this->ingredientRepository->findOneBy([
+        $ingredient = $this->ingredientRepository->findOneBy([
             'ozaId' => $id,
             'user' => $this->user
         ]);
 
-        return $this->ingredient !== null;
+        if ($ingredient === null) {
+            return false;
+        }
+        $this->ingredient = $ingredient;
+
+        return true;
     }
 
     public function getIngredient(): Ingredient

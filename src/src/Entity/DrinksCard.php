@@ -127,7 +127,7 @@ class DrinksCard
         return $this;
     }
 
-    public function getPublicId(): ?string
+    public function getPublicId(): string
     {
         return $this->publicId;
     }
@@ -145,6 +145,13 @@ class DrinksCard
     public function getAvailableTags(): Collection
     {
         return $this->availableTags;
+    }
+
+    public function setAvailableTags(ArrayCollection $tags): self
+    {
+        $this->availableTags = $tags;
+
+        return $this;
     }
 
     public function addAvailableTag(Tag $availableTag): self
@@ -171,6 +178,13 @@ class DrinksCard
         return $this->excludedTags;
     }
 
+    public function setExcludedTags(ArrayCollection $tags): self
+    {
+        $this->excludedTags = $tags;
+
+        return $this;
+    }
+
     public function addExcludedTag(Tag $excludedTag): self
     {
         if (!$this->excludedTags->contains($excludedTag)) {
@@ -193,6 +207,13 @@ class DrinksCard
     public function getAvailableIngredients(): Collection
     {
         return $this->availableIngredients;
+    }
+
+    public function setAvailableIngredients(ArrayCollection $ingredients): self
+    {
+        $this->availableIngredients = $ingredients;
+
+        return $this;
     }
 
     public function addAvailableIngredient(Ingredient $availableIngredient): self
@@ -219,6 +240,13 @@ class DrinksCard
         return $this->excludedIngredients;
     }
 
+    public function setExcludedIngredients(ArrayCollection $ingredients): self
+    {
+        $this->excludedIngredients = $ingredients;
+
+        return $this;
+    }
+
     public function addExcludedIngredient(Ingredient $excludedIngredient): self
     {
         if (!$this->excludedIngredients->contains($excludedIngredient)) {
@@ -235,40 +263,19 @@ class DrinksCard
         return $this;
     }
 
-    public function setAvailableTags(ArrayCollection $tags): self
-    {
-        $this->availableTags = $tags;
-
-        return $this;
-    }
-
-    public function setExcludedTags(ArrayCollection $tags): self
-    {
-        $this->excludedTags = $tags;
-
-        return $this;
-    }
-
-    public function setAvailableIngredients(ArrayCollection $ingredients): self
-    {
-        $this->availableIngredients = $ingredients;
-
-        return $this;
-    }
-
-    public function setExcludedIngredients(ArrayCollection $ingredients): self
-    {
-        $this->excludedIngredients = $ingredients;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Drink[]
      */
     public function getAvailableDrinks(): Collection
     {
         return $this->availableDrinks;
+    }
+
+    public function setAvailableDrinks(ArrayCollection $drinks): self
+    {
+        $this->availableDrinks = $drinks;
+
+        return $this;
     }
 
     public function addAvailableDrink(Drink $availableDrink): self
@@ -295,6 +302,13 @@ class DrinksCard
         return $this->excludedDrinks;
     }
 
+    public function setExcludedDrinks(ArrayCollection $drinks): self
+    {
+        $this->excludedDrinks = $drinks;
+
+        return $this;
+    }
+
     public function addExcludedDrink(Drink $excludedDrink): self
     {
         if (!$this->excludedDrinks->contains($excludedDrink)) {
@@ -307,20 +321,6 @@ class DrinksCard
     public function removeExcludedDrink(Drink $excludedDrink): self
     {
         $this->excludedDrinks->removeElement($excludedDrink);
-
-        return $this;
-    }
-
-    public function setAvailableDrinks(ArrayCollection $drinks): self
-    {
-        $this->availableDrinks = $drinks;
-
-        return $this;
-    }
-
-    public function setExcludedDrinks(ArrayCollection $drinks): self
-    {
-        $this->excludedDrinks = $drinks;
 
         return $this;
     }

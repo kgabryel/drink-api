@@ -56,9 +56,9 @@ class ApiAuthenticator extends AbstractGuardAuthenticator
         return new Response(null, Response::HTTP_UNAUTHORIZED);
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): ?Response
     {
-        return;
+        return null;
     }
 
     public function supportsRememberMe(): bool

@@ -6,10 +6,10 @@ use App\Entity\Drink;
 use App\Model\Drink as DrinkModel;
 use App\Repository\DrinkRepository;
 use App\Service\DrinkFillService;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DrinkService extends EntityService
 {
@@ -19,11 +19,11 @@ class DrinkService extends EntityService
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage,
+        UserService $userService,
         DrinkFillService $drinkFillService,
         DrinkRepository $drinkRepository
     ) {
-        parent::__construct($entityManager, $tokenStorage);
+        parent::__construct($entityManager, $userService);
         $this->drinkFillService = $drinkFillService;
         $this->drinkRepository = $drinkRepository;
     }

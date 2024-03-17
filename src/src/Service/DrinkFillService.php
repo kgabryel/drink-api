@@ -9,7 +9,6 @@ use App\Entity\User;
 use App\Model\Drink as DrinkModel;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DrinkFillService
 {
@@ -22,11 +21,11 @@ class DrinkFillService
     public function __construct(
         EntityManagerInterface $entityManager,
         TagRepository $tagRepository,
-        TokenStorageInterface $tokenStorage
+        UserService $userService
     ) {
         $this->entityManager = $entityManager;
         $this->tagRepository = $tagRepository;
-        $this->user = $tokenStorage->getToken()->getUser();
+        $this->user = $userService->getUser();
     }
 
     public function setDrink(Drink $drink): static

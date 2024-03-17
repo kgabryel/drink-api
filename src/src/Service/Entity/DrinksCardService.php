@@ -6,23 +6,22 @@ use App\Entity\DrinksCard;
 use App\Model\DrinksCard as DrinksCardModel;
 use App\Repository\DrinksCardRepository;
 use App\Service\DrinksCardFillService;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DrinksCardService extends EntityService
 {
-
     private DrinksCard $drinksCard;
     private DrinksCardRepository $drinksCardRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage,
+        UserService $userService,
         DrinksCardRepository $drinksCardRepository
     ) {
-        parent::__construct($entityManager, $tokenStorage);
+        parent::__construct($entityManager, $userService);
         $this->drinksCardRepository = $drinksCardRepository;
     }
 

@@ -220,12 +220,7 @@ class Drink
 
     public function removePhoto(Photo $photo): self
     {
-        if ($this->photos->removeElement($photo)) {
-            // set the owning side to null (unless already changed)
-            if ($photo->getDrink() === $this) {
-                $photo->setDrink(null);
-            }
-        }
+        $this->photos->removeElement($photo);
 
         return $this;
     }

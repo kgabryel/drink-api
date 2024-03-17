@@ -68,6 +68,28 @@ class DrinksCard implements DtoInterface
         return $this->id;
     }
 
+    public static function createFromEntity(mixed $entity): DtoInterface
+    {
+        if (!($entity instanceof Entity)) {
+            throw new InvalidArgumentException(
+                sprintf('Parameter "entity" isn\'t an instance of "%s" class', Entity::class)
+            );
+        }
+
+        return new self(
+            $entity->getId(),
+            $entity->getName(),
+            $entity->isActive(),
+            $entity->getPublicId(),
+            array_values($entity->getAvailableTags()->toArray()),
+            array_values($entity->getExcludedTags()->toArray()),
+            array_values($entity->getAvailableIngredients()->toArray()),
+            array_values($entity->getExcludedIngredients()->toArray()),
+            array_values($entity->getAvailableDrinks()->toArray()),
+            array_values($entity->getExcludedDrinks()->toArray())
+        );
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -111,27 +133,5 @@ class DrinksCard implements DtoInterface
     public function getExcludedDrinks(): array
     {
         return $this->excludedDrinks;
-    }
-
-    public static function createFromEntity($entity): DtoInterface
-    {
-        if (!($entity instanceof Entity)) {
-            throw new InvalidArgumentException(
-                printf('Parameter "entity" isn\'t an instance of "%s" class', Entity::class)
-            );
-        }
-
-        return new self(
-            $entity->getId(),
-            $entity->getName(),
-            $entity->isActive(),
-            $entity->getPublicId(),
-            array_values($entity->getAvailableTags()->toArray()),
-            array_values($entity->getExcludedTags()->toArray()),
-            array_values($entity->getAvailableIngredients()->toArray()),
-            array_values($entity->getExcludedIngredients()->toArray()),
-            array_values($entity->getAvailableDrinks()->toArray()),
-            array_values($entity->getExcludedDrinks()->toArray())
-        );
     }
 }

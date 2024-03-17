@@ -5,11 +5,11 @@ namespace App\Form;
 use App\Config\LengthConfig;
 use App\Model\Ingredient;
 use App\Repository\IngredientRepository;
+use App\Service\UserService;
 use App\Validator\UniqueNameForUser\UniqueNameForUser;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -17,9 +17,9 @@ class EditIngredientForm extends UserForm
 {
     private IngredientRepository $ingredientRepository;
 
-    public function __construct(IngredientRepository $ingredientRepository, TokenStorageInterface $tokenStorage)
+    public function __construct(IngredientRepository $ingredientRepository, UserService $userService)
     {
-        parent::__construct($tokenStorage);
+        parent::__construct($userService);
         $this->ingredientRepository = $ingredientRepository;
     }
 
@@ -34,12 +34,9 @@ class EditIngredientForm extends UserForm
                         'max' => LengthConfig::INGREDIENT
                     ]),
                     new UniqueNameForUser(
-                        [
-                            UniqueNameForUser::REPOSITORY_OPTION => $this->ingredientRepository,
-                            UniqueNameForUser::USER_OPTION => $this->user,
-                            UniqueNameForUser::COLUMN_OPTION => 'name',
-                            UniqueNameForUser::EXPECT_OPTION => $options['expect']
-                        ]
+                        $this->ingredientRepository,
+                        $this->user,
+                        expect: $options['expect']
                     )
                 ]
             ]

@@ -5,10 +5,10 @@ namespace App\Service\Entity;
 use App\Entity\Tag;
 use App\Model\Tag as TagModel;
 use App\Repository\TagRepository;
+use App\Service\UserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class TagService extends EntityService
 {
@@ -17,10 +17,10 @@ class TagService extends EntityService
 
     public function __construct(
         EntityManagerInterface $entityManager,
-        TokenStorageInterface $tokenStorage,
+        UserService $userService,
         TagRepository $tagRepository
     ) {
-        parent::__construct($entityManager, $tokenStorage);
+        parent::__construct($entityManager, $userService);
         $this->tagRepository = $tagRepository;
     }
 
@@ -50,10 +50,10 @@ class TagService extends EntityService
         $data = $form->getData();
         $name = $data->getName();
         $isPublic = $data->isPublic();
-        if($name !== null) {
+        if ($name !== null) {
             $this->tag->setName($name);
         }
-        if($isPublic !== null) {
+        if ($isPublic !== null) {
             $this->tag->setPublic($isPublic);
         }
         $this->saveEntity($this->tag);

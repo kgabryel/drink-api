@@ -5,11 +5,11 @@ namespace App\Form;
 use App\Config\LengthConfig;
 use App\Model\Tag;
 use App\Repository\TagRepository;
+use App\Service\UserService;
 use App\Validator\UniqueNameForUser\UniqueNameForUser;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -17,9 +17,9 @@ class TagForm extends UserForm
 {
     private TagRepository $tagRepository;
 
-    public function __construct(TagRepository $tagRepository, TokenStorageInterface $tokenStorage)
+    public function __construct(TagRepository $tagRepository, UserService $userService)
     {
-        parent::__construct($tokenStorage);
+        parent::__construct($userService);
         $this->tagRepository = $tagRepository;
     }
 
@@ -35,12 +35,9 @@ class TagForm extends UserForm
                         'max' => LengthConfig::TAG
                     ]),
                     new UniqueNameForUser(
-                        [
-                            UniqueNameForUser::REPOSITORY_OPTION => $this->tagRepository,
-                            UniqueNameForUser::USER_OPTION => $this->user,
-                            UniqueNameForUser::COLUMN_OPTION => 'name',
-                            UniqueNameForUser::EXPECT_OPTION => $options['expect']
-                        ]
+                        $this->tagRepository,
+                        $this->user,
+                        expect: $options['expect']
                     )
                 ]
             ]

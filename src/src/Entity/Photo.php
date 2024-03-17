@@ -54,12 +54,12 @@ class Photo
      */
     private ?int $photoOrder;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getHeight(): ?int
+    public function getHeight(): int
     {
         return $this->height;
     }
@@ -71,7 +71,7 @@ class Photo
         return $this;
     }
 
-    public function getWidth(): ?int
+    public function getWidth(): int
     {
         return $this->width;
     }
@@ -83,7 +83,7 @@ class Photo
         return $this;
     }
 
-    public function getFileName(): ?string
+    public function getFileName(): string
     {
         return $this->fileName;
     }
@@ -95,7 +95,7 @@ class Photo
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -107,24 +107,24 @@ class Photo
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(User $user): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    public function getDrink(): ?Drink
+    public function getDrink(): Drink
     {
         return $this->drink;
     }
 
-    public function setDrink(?Drink $drink): self
+    public function setDrink(Drink $drink): self
     {
         $this->drink = $drink;
 
